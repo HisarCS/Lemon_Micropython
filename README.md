@@ -17,8 +17,9 @@ channel:
 i2c = I2C(0, scl=Pin(1), sda=Pin(0))’’’
 
 The following function from the I2C class in the machine library takes three arguments. The second and the third one initialize the set pins for the I2C channel. And the first argument sets which I2C channel the PCA9685 is. After that, you must set the I2C channel you have just created for your PCA9685 and also set your PWM frequency.
-‘’’pca = PCA9685(i2c)
-  pca.set_pwm_freq(50)
+‘’’python
+pca = PCA9685(i2c)
+pca.set_pwm_freq(50)
 ‘’’
 You must create a while loop in order to move the fish.
 ‘’’while True:
