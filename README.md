@@ -7,9 +7,15 @@ Firstly, you must connect your Pico to your computer with the pico cable. Then y
 Secondly, you must prepare the LemonLib library to perform the necessary functions needed to control your robot. First, you must create a folder named Lemon then you must open your computer’s terminal and write cd Lemon. Then, you must write git clone (library link). After completing this process you will have installed the library. Next, you must install the IDE Mu Editor. (Mu editor için gereken adımları ekle). 
 
 This library works for the Lime and Satsuma robots. To control your Lime robot, you must perform the following steps. Firstly, you must import the Lemon library with the following line :
+
 ‘’’ import LemonLib’’’
-Then you must initialize your I2C channel:
-‘’’i2c = I2C(0, scl=Pin(1), sda=Pin(0))’’’
+
+Then you must initialize your I2C 
+channel:
+
+‘’’
+i2c = I2C(0, scl=Pin(1), sda=Pin(0))’’’
+
 The following function from the I2C class in the machine library takes three arguments. The second and the third one initialize the set pins for the I2C channel. And the first argument sets which I2C channel the PCA9685 is. After that, you must set the I2C channel you have just created for your PCA9685 and also set your PWM frequency.
 ‘’’pca = PCA9685(i2c)
   pca.set_pwm_freq(50)
