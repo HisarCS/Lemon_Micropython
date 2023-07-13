@@ -8,7 +8,7 @@ Secondly, you must prepare the LemonLib library to perform the necessary functio
 
 This library works for the Lime and Satsuma robots. To control your Lime robot, you must perform the following steps. Firstly, you must import the Lemon library with the following line :
 
-‘’’python
+‘’’
 
 import LemonLib
 ’’’
