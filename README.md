@@ -10,7 +10,8 @@ This library works for the Lime and Satsuma robots. To control your Lime robot, 
 
 ‘’’python
 
-import LemonLib’’’
+import LemonLib
+’’’
 
 Then you must initialize your I2C 
 channel:
