@@ -17,16 +17,18 @@ import LemonLib
 Then you must initialize your I2C 
 channel:
 
-‘’’
-i2c = I2C(0, scl=Pin(1), sda=Pin(0))’’’
+```python
+i2c = I2C(0, scl=Pin(1), sda=Pin(0))
+```
 
 The following function from the I2C class in the machine library takes three arguments. The second and the third one initialize the set pins for the I2C channel. And the first argument sets which I2C channel the PCA9685 is. After that, you must set the I2C channel you have just created for your PCA9685 and also set your PWM frequency.
-‘’’python
+```python
 pca = PCA9685(i2c)
 pca.set_pwm_freq(50)
-‘’’
-You must create a while loop in order to move the fish.
-‘’’while True:
+```
+Then you must create a while loop in order to move the fish.
+```python
+while True:
       for angle in range:(0, 180, 5):
           pca.set_angle(0, angle)
           pca.set_angle(1, angle)
@@ -38,7 +40,7 @@ You must create a while loop in order to move the fish.
           pca.set_angle(1, angle)
           print(angle)
           time.sleep(0.05)
-‘’’
+```
 
 The angle in range functions make the Lime fish move from 0 to 180 and then from 180 to 0 5 degrees at a time. Whilst the pca.set_angle function sets the current angle value created in the loops to the servos on the PCA9685’s first and second channels, the print(angle) function shows you the current angle value which is created by the for loops. Also the time.sleep(0.05) smooths out the movement of the fish by creating a small time interval between each iteration of the loop.
 
