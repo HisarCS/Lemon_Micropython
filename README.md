@@ -72,3 +72,23 @@ The following function from the I2C class in the machine library takes three arg
 pca = PCA9685(i2c)
 pca.set_pwm_freq(50)
 ```
+
+```python
+while True:
+        pca.set_angle(0, 40)
+        pca.set_angle(1, 90)
+        pca.set_angle(2, 40)
+        pca.set_angle(3, 50)
+        pca.set_angle(4, 90)
+
+        time.sleep(0.5)
+
+        pca.set_angle(0, 20)
+        pca.set_angle(1, 110)
+        pca.set_angle(2, 20)
+        pca.set_angle(3, 90)
+        pca.set_angle(4, 50)
+```
+This creates the loop for the turtle to go between the set intervals for it to move according to the initial design
+
+
