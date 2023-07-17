@@ -2,8 +2,7 @@
 This is the library for controlling Lemon Robots with micropython via the RaspberryPi Pico
 
 
-Firstly, you must connect your Pico to your computer with the pico cable. Then you must connect the PCA9685 to your Pico. Firstly you must connect the SCL, SDA, VCC and Ground pins of the PCA9685 to your picos General Purpose Input Output(GPIO) pins. You should connect SDA to pin zero, SCL to pin one![073cf75b-f7a1-41f8-8be5-8a3ceca66a8d](https://github.com/HisarCS/Lemon_Micropython/assets/120194760/a306004c-99e0-4492-924a-61f84acff67c)
-e. Then you should connect VCC to pin 40 and Ground to pin 38 as seen in the image below. Then you must connect a power source(preferably 4.5-5V) to the power pins located on the side of the PCA9685 because the pico only powers the logic gates of the PCA9685.
+Firstly, you must connect your Pico to your computer with the pico cable. Then you must connect the PCA9685 to your Pico. Firstly you must connect the SCL, SDA, VCC and Ground pins of the PCA9685 to your picos General Purpose Input Output(GPIO) pins. You should connect SDA to pin zero, SCL to pin one![073cf75b-f7a1-41f8-8be5-8a3ceca66a8d](https://github.com/HisarCS/Lemon_Micropython/assets/120194760/a306004c-99e0-4492-924a-61f84acff67c). Then you should connect VCC to pin 40 and Ground to pin 38 as seen in the image below. Then you must connect a power source(preferably 4.5-5V) to the power pins located on the side of the PCA9685 because the pico only powers the logic gates of the PCA9685.
 
 Secondly, you must prepare the LemonLib library to perform the necessary functions needed to control your robot. First, you must create a folder named Lemon then you must open your computer’s terminal and write cd Lemon. Then, you must write git clone (library link). After completing this process you will have installed the library. Next, you must install the IDE Mu Editor. (Mu editor için gereken adımları ekle). 
 
