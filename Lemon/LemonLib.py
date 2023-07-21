@@ -44,7 +44,7 @@ class PCA9685:
     def set_angle(self, channel, angle):
         angle = max(0, min(180, angle))  # Limit angle between 0 and 180 degrees
         pulse = int(102.4 + (angle * 4.6)) #(4.6 = conversion factor, 102.4 pulse width in microseconds which corresponds to neutral/start position(base value in PCA9685))conversion factor converts and value to pulse width
-        self.__set_pwm__(channel, 0, pulse)#sets pwm value for angle
+        self.__set_pwm__(channel, 0, pulse)#sets pwm value for angle(0 sets the delay of on time which is none in this case)
 
 
 
