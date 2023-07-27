@@ -21,7 +21,7 @@ class PCA9685:
         prescale_val /= float(freq)
         #one is subtract to ensure it fals into the 12 bit range(0-4095)
         prescale_val -= 1.0
-        #make the number an int because it must be one also it prevents it being a negative int
+        #round up to the nearest int
         prescale = int(prescale_val + 0.5)
         #reads the info from the sleep register
         old_mode = self.i2c.readfrom_mem(self.address, 0x00, 1)[0]
