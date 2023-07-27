@@ -31,7 +31,7 @@ class PCA9685:
         self.i2c.writeto_mem(self.address, 0xFE, bytes([prescale]))  # set the prescaler val
         self.i2c.writeto_mem(self.address, 0x00, bytes([old_mode]))  # wake up
 
-    def __set_pwm__(self, channel, on, off):
+    def __set_pwm__(self, channel, on, off):#on and off are the parameters for the on and off time
         #calculate channel offset(in pca9685 every channel equires 4 registers so channel offset must be calculated via channel*4
         #the time setting is for the time of pwm signal on and off
         channel_offset = 4 * channel
