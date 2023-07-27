@@ -24,17 +24,21 @@ class PCA9685:
         #round up to the nearest int
         prescale = int(prescale_val + 0.5)
         #reads the info from the sleep register
+        #0x00 first register controlles if the PCA9685 is on
         old_mode = self.i2c.readfrom_mem(self.address, 0x00, 1)[0]
+        #0111 = 0x07 0001 0000 = 0x10
         new_mode = (old_mode & 0x7F) | 0x10 #updates the on/off of sleep mode through binary operation
-
-        self.i2c.writeto_mem(self.address, 0x00, bytes([new_mode]))  # go to sleep
-        self.i2c.writeto_mem(self.address, 0xFE, bytes([prescale]))  # set the prescaler val
-        self.i2c.writeto_mem(self.address, 0x00, bytes([old_mode]))  # wake up
+        
+        self.i2c.writeto_mem(self.address, 0x00, bytes([new_mode])) #ensures the PCA 9685 is not in sleep mode because PCA must be awake before configuring it such as setting the prescale val.
+        #the adress which sets the prescale to the internal oscilator
+        self.i2c.writeto_mem(self.address, 0xFE, bytes([prescale]))  # set the prescaler val which is important essantial things such as for PWM frequency control
+        self.i2c.writeto_mem(self.address, 0x00, bytes([old_mode]))  # restore original base configs(basically factory settings) of the PCA9685
 
     def __set_pwm__(self, channel, on, off):#on and off are the parameters for the on and off time
         #calculate channel offset(in pca9685 every channel equires 4 registers so channel offset must be calculated via channel*4
         #the time setting is for the time of pwm signal on and off
         channel_offset = 4 * channel
+        #note that 0xFF is equvilant to one in binary
         self.i2c.writeto_mem(self.address, 0x06 + channel_offset, bytes([on & 0xFF]))#(0x06 = ON_L)writes the lower 8 bits of the on register sets the timimng of the beginingg for the active period
         self.i2c.writeto_mem(self.address, 0x07 + channel_offset, bytes([(on >> 8) & 0xFF]))#(OxO7 = ON_H) writes the upper 4 bits completes the setting of time (remaining bits)
         self.i2c.writeto_mem(self.address, 0x08 + channel_offset, bytes([off & 0xFF]))#(0x08 = OFF_L)writes the lower 8 bits of the off register sets the timimng of the beginnig for the off period
