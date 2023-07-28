@@ -8,6 +8,10 @@ class PCA9685:
         self.reset()
 
 
+    def reset(self):
+        #send the reset command to PCA9685 0x06 = reset value of PCA
+        self.i2c.writeto_mem(self.address, 0x00, bytes([0x06]))
+
     def set_pwm_freq(self, freq):
         #internal oscilator(stable clock signal which serves a timing refrence) value
         prescale_val = 25000000.0  # 25MHz
