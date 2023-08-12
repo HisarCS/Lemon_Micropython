@@ -1,5 +1,6 @@
-from machine import I2C, Pin
 from time import sleep
+from machine import I2C, Pin
+
 class PCA9685:
     #initalizer of the class
     def __init__(self, i2c, address=0x40):
@@ -12,13 +13,14 @@ class PCA9685:
         #send the reset command to PCA9685 0x06 = reset value of PCA
         self.i2c.writeto_mem(self.address, 0x00, bytes([0x06]))
 
-    def set_pwm_freq(self, freq):
+    
+    def set_pwm_freq(self, freq: float):
         #internal oscilator(stable clock signal which serves a timing refrence) value
         prescale_val = 25000000.0  # 25MHz
         #converts this value to 12 bit which the PCA9685 uses
         prescale_val /= 4096.0  # 12-bit
         #divivded by freq to send signals at requried freq
-        prescale_val /= float(freq)
+        prescale_val /= freq
         #one is subtract to ensure it fals into the 12 bit range(0-4095)
         prescale_val -= 1.0
         #round up to the nearest int
@@ -34,7 +36,7 @@ class PCA9685:
         self.i2c.writeto_mem(self.address, 0xFE, bytes([prescale]))  # set the prescaler val which is important essantial things such as for PWM frequency control
         self.i2c.writeto_mem(self.address, 0x00, bytes([old_mode]))  # restore original base configs(basically factory settings) of the PCA9685
 
-    def __set_pwm__(self, channel, on, off):#on and off are the parameters for the on and off time
+    def __set_pwm__(self, channel, on, off): #on and off are the parameters for the on and off time
         #calculate channel offset(in pca9685 every channel equires 4 registers so channel offset must be calculated via channel*4
         #the time setting is for the time of pwm signal on and off
         channel_offset = 4 * channel
@@ -50,7 +52,8 @@ class PCA9685:
         pulse = int(102.4 + (angle * 4.6)) #(4.6 = conversion factor, 102.4 pulse width in microseconds which corresponds to neutral/start position(for servos)conversion factor converts the angle to the corresponidng width in microseconds. Microseconds were chosen because they provide a good level of precision for controlling devices with PWM(pulse width modulation)
         self.__set_pwm__(channel, 0, pulse)#sets pwm value for angle setting on to 0 means that the pins automatically start at HIGH and setting off to pulse means the pwm goes to LOW until the next PWM cycle. So to conclude the servo goes to the desired position at the start because on is set to 0 and setting pulse for the off registers ensure the PWM remaining on low until the start of the next cycle.
 
-
+def createI2C(id, scl, sda, freq=400000, timeout=50000):
+    return I2C(id, scl=scl, sda=sda, freq=freq, timeout=timeout)
 
     
 
