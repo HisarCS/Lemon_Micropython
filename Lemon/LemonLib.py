@@ -53,7 +53,7 @@ class PCA9685:
         self.__set_pwm__(channel, 0, pulse)#sets pwm value for angle setting on to 0 means that the pins automatically start at HIGH and setting off to pulse means the pwm goes to LOW until the next PWM cycle. So to conclude the servo goes to the desired position at the start because on is set to 0 and setting pulse for the off registers ensure the PWM remaining on low until the start of the next cycle.
 
 def createI2C(id, scl, sda, freq=400000, timeout=50000):
-    return I2C(id, scl=scl, sda=sda, freq=freq, timeout=timeout)
+    return I2C(id, scl=Pin(scl), sda=Pin(sda), freq=freq, timeout=timeout)
 
     
 
