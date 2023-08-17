@@ -23,7 +23,7 @@ class PCA9685:
         prescale_val -= 1.0
         #round up to the nearest int
         prescale = int(prescale_val + 0.5)
-        #reads the info from the sleep register
+        #reads the info from the MODE1 register and gets it current state
         #reads the least significant BYTE
         old_mode = self.i2c.readfrom_mem(self.address, 0x00, 1)[0]
         #0111 = 0x07 0001 0000 = 0x10
@@ -32,7 +32,7 @@ class PCA9685:
         self.i2c.writeto_mem(self.address, 0x00, bytes([new_mode])) #ensures the PCA 9685 is in sleep mode because PCA must be asleep before configuring it such as setting the prescale val.
         #the adress which sets the prescale to the internal oscilator
         self.i2c.writeto_mem(self.address, 0xFE, bytes([prescale]))  # set the prescaler val which is important essantial things such as for PWM frequency control
-        self.i2c.writeto_mem(self.address, 0x00, bytes([old_mode]))  # restore original base configs(basically factory settings) of the PCA9685
+        self.i2c.writeto_mem(self.address, 0x00, bytes([old_mode]))  # restore original base configs(normaş working settings) of the PCA9685
 
     def __set_pwm__(self, channel, on, off):#on and off are the parameters for the on and off time
         #calculate channel offset(in pca9685 every channel equires 4 registers so channel offset must be calculated via channel*4
