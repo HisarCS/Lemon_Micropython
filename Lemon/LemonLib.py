@@ -3,7 +3,7 @@ from machine import I2C, Pin
 
 class PCA9685:
     #initalizer of the class
-    def __init__(self, i2c, address=0x40):
+    def __init__(self, i2c: I2C, address=0x40):
         self.i2c = i2c
         self.address = address
         self.reset()
@@ -36,7 +36,7 @@ class PCA9685:
         self.i2c.writeto_mem(self.address, 0xFE, bytes([prescale]))  # set the prescaler val which is important essantial things such as for PWM frequency control
         self.i2c.writeto_mem(self.address, 0x00, bytes([old_mode]))  # restore original base configs(basically factory settings) of the PCA9685
 
-    def __set_pwm__(self, channel, on, off): #on and off are the parameters for the on and off time
+    def __set_pwm__(self, channel: int, on: int, off: int): #on and off are the parameters for the on and off time
         #calculate channel offset(in pca9685 every channel equires 4 registers so channel offset must be calculated via channel*4
         #the time setting is for the time of pwm signal on and off
         channel_offset = 4 * channel
@@ -47,12 +47,12 @@ class PCA9685:
         self.i2c.writeto_mem(self.address, 0x09 + channel_offset, bytes([(off >> 8) & 0xFF]))#)#(OxO9 = OFF_H) writes the upper 4 bits completes the setting of time (remaining bits)
 
 
-    def set_angle(self, channel, angle):
+    def set_angle(self, channel: int, angle: int):
         angle = max(0, min(180, angle))  # Limit angle between 0 and 180 degrees
         pulse = int(102.4 + (angle * 4.6)) #(4.6 = conversion factor, 102.4 pulse width in microseconds which corresponds to neutral/start position(for servos)conversion factor converts the angle to the corresponidng width in microseconds. Microseconds were chosen because they provide a good level of precision for controlling devices with PWM(pulse width modulation)
         self.__set_pwm__(channel, 0, pulse)#sets pwm value for angle setting on to 0 means that the pins automatically start at HIGH and setting off to pulse means the pwm goes to LOW until the next PWM cycle. So to conclude the servo goes to the desired position at the start because on is set to 0 and setting pulse for the off registers ensure the PWM remaining on low until the start of the next cycle.
 
-def createI2C(id, scl, sda, freq=400000, timeout=50000): # function to create a I2C object without importing machine in the code so that the code that uses this libary doesn't need to import machine
+def createI2C(id: int, scl: int, sda: int, freq=400000, timeout=50000): # function to create a I2C object without importing machine in the code so that the code that uses this libary doesn't need to import machine
     return I2C(id, scl=Pin(scl), sda=Pin(sda), freq=freq, timeout=timeout) # retuns a I2C object via converting the scl and sda into their individual Pin objects
 
     
