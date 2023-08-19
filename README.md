@@ -17,7 +17,7 @@ This library works for the Lime and Satsuma robots. To control your Lime robot, 
 
 ```python
 
-import LemonLib
+import Lemon
 
 ```
 
@@ -25,7 +25,7 @@ Then you must initialize your I2C
 channel:
 
 ```python
-i2c = I2C(0, scl=Pin(1), sda=Pin(0))
+i2c = createI2C(0, scl=1, sda=0)
 ```
 
 The following function from the I2C class in the machine library takes three arguments. The second and the third one initialize the set pins for the I2C channel. And the first argument sets which I2C channel the PCA9685 is. After that, you must set the I2C channel you have just created for your PCA9685 and also set your PWM frequency.
@@ -56,7 +56,7 @@ To control your Satsuma robot, you must perform the following steps. Firstly, yo
 
 ```python
 
-import LemonLib
+import Lemon
 
 ```
 
@@ -64,7 +64,7 @@ Then you must initialize your I2C
 channel:
 
 ```python
-i2c = I2C(0, scl=Pin(1), sda=Pin(0))
+i2c = createI2C(0, scl=1, sda=0)
 ```
 
 The following function from the I2C class in the machine library takes three arguments. The second and the third one initialize the set pins for the I2C channel. And the first argument sets which I2C channel the PCA9685 is. After that, you must set the I2C channel you have just created for your PCA9685 and also set your PWM frequency.
