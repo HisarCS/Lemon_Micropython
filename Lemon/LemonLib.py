@@ -28,6 +28,7 @@ class PCA9685:
         old_mode = self.i2c.readfrom_mem(self.address, 0x00, 1)[0]
         #0111 = 0x07 0001 0000 = 0x10
         new_mode = (old_mode & 0x7F) | 0x10 #updates the on/off of sleep mode through binary operation
+        #sets the pca9685 to sleep mode
         
         self.i2c.writeto_mem(self.address, 0x00, bytes([new_mode])) #ensures the PCA 9685 is in sleep mode because PCA must be asleep before configuring it such as setting the prescale val.
         #the adress which sets the prescale to the internal oscilator
