@@ -51,8 +51,8 @@ class PCA9685:
     def set_angle(self, channel, angle):
         angle = max(0, min(180, angle))  # Limit angle between 0 and 180 degrees
         pulse = int(102.4 + (angle * 4.6)) #(4.6 = conversion factor, 102.4 pulse width in microseconds which corresponds to neutral/start position((basically angle 0),(for servos))conversion factor converts the angle to the corresponidng width in microseconds. Microseconds were chosen because they provide a good level of precision for controlling devices with PWM(pulse width modulation)
-        self.__set_pwm__(channel, 0.001, pulse)#sets pwm value for angle setting on to 0.001 means that the pins automatically start at HIGH and setting off to pulse means the pwm goes to LOW until the next PWM cycle. So to conclude the servo goes to the desired position at the start because on is set to 0.001 and setting pulse for the off registers ensure the PWM remaining on low until the start of the next cycle.
-
+        self.__set_pwm__(channel, 0.01, pulse)#sets pwm value for angle setting on to 0.001 means that the pins automatically start at HIGH and setting off to pulse means the pwm goes to LOW until the next PWM cycle. So to conclude the servo goes to the desired position at the start because on is set to 0.001 and setting pulse for the off registers ensure the PWM remaining on low until the start of the next cycle.
+        #the time of on was set to 0.01 because of overheating after tests
 
 
     
