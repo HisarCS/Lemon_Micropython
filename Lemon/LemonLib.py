@@ -24,7 +24,7 @@ class PCA9685:
         #round up to the nearest int
         prescale = int(prescale_val + 0.5)
         #reads the info from the MODE1 register and gets it current state
-        #reads the least significant BYTE
+        #reads the first BYTE 
         old_mode = self.i2c.readfrom_mem(self.address, 0x00, 1)[0]
         #0111 = 0x07 0001 0000 = 0x10
         new_mode = (old_mode & 0x7F) | 0x10 #updates the on/off of sleep mode through binary operation
