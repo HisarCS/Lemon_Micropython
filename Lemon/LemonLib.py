@@ -38,17 +38,20 @@ class PCA9685:
         #calculate channel offset(in pca9685 every channel equires 4 registers so channel offset must be calculated via channel*4
         #the time setting is for the time of pwm signal on and off
         channel_offset = 4 * channel
+        #offset is multiplied by 4 because each channel has 4 registers
         #note that 0xFF is equvilant to one in binary
+        
         self.i2c.writeto_mem(self.address, 0x06 + channel_offset, bytes([on & 0xFF]))#(0x06 = ON_L)writes the lower 8 bits of the on register sets the timimng of the beginingg for the active period
         self.i2c.writeto_mem(self.address, 0x07 + channel_offset, bytes([(on >> 8) & 0xFF]))#(OxO7 = ON_H) writes the upper 4 bits completes the setting of time (remaining bits)
         self.i2c.writeto_mem(self.address, 0x08 + channel_offset, bytes([off & 0xFF]))#(0x08 = OFF_L)writes the lower 8 bits of the off register sets the timimng of the beginnig for the off period
         self.i2c.writeto_mem(self.address, 0x09 + channel_offset, bytes([(off >> 8) & 0xFF]))#)#(OxO9 = OFF_H) writes the upper 4 bits completes the setting of time (remaining bits)
-
+        #>> shifts the values to the right
+        #0xFF is used for masking. All bits are preserved after this process
 
     def set_angle(self, channel, angle):
         angle = max(0, min(180, angle))  # Limit angle between 0 and 180 degrees
-        pulse = int(102.4 + (angle * 4.6)) #(4.6 = conversion factor, 102.4 pulse width in microseconds which corresponds to neutral/start position(for servos)conversion factor converts the angle to the corresponidng width in microseconds. Microseconds were chosen because they provide a good level of precision for controlling devices with PWM(pulse width modulation)
-        self.__set_pwm__(channel, 0.001, pulse)#sets pwm value for angle setting on to 0 means that the pins automatically start at HIGH and setting off to pulse means the pwm goes to LOW until the next PWM cycle. So to conclude the servo goes to the desired position at the start because on is set to 0 and setting pulse for the off registers ensure the PWM remaining on low until the start of the next cycle.
+        pulse = int(102.4 + (angle * 4.6)) #(4.6 = conversion factor, 102.4 pulse width in microseconds which corresponds to neutral/start position((basically angle 0),(for servos))conversion factor converts the angle to the corresponidng width in microseconds. Microseconds were chosen because they provide a good level of precision for controlling devices with PWM(pulse width modulation)
+        self.__set_pwm__(channel, 0.001, pulse)#sets pwm value for angle setting on to 0.001 means that the pins automatically start at HIGH and setting off to pulse means the pwm goes to LOW until the next PWM cycle. So to conclude the servo goes to the desired position at the start because on is set to 0.001 and setting pulse for the off registers ensure the PWM remaining on low until the start of the next cycle.
 
 
 
