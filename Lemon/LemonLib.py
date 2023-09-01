@@ -17,7 +17,7 @@ class PCA9685:
         prescale_val = 25000000.0  # 25MHz
         #converts this value to 12 bit which the PCA9685 uses
         prescale_val /= 4096.0  # 12-bit
-        #divivded by freq to send signals at requried freq
+        #divivded by freq to scale down the prescale val to get to the desired angle
         prescale_val /= float(freq)
         #one is subtract to ensure it fals into the 12 bit range(0-4095)
         prescale_val -= 1.0
