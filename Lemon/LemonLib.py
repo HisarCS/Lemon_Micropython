@@ -21,7 +21,7 @@ class PCA9685:
         prescale_val /= float(freq)
         #one is subtract to ensure it fals into the 12 bit range(0-4095)
         prescale_val -= 1.0
-        #round up to the nearest int
+        #round up to the nearest int making it easier to work with
         prescale = int(prescale_val + 0.5)
         #reads the info from the MODE1 register and gets it current state
         #reads the first BYTE 
